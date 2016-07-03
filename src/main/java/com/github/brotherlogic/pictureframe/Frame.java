@@ -6,6 +6,7 @@ public class Frame extends FrameBase {
 		FrameDisplay d = new FrameDisplay();
 		d.setSize(200, 200);
 		d.setLocationRelativeTo(null);
+		d.setSize(800, 480);
 		d.setVisible(true);
 	}
 }
