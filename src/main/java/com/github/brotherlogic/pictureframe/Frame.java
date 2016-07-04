@@ -1,5 +1,6 @@
 package com.github.brotherlogic.pictureframe;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.swing.JFrame;
@@ -13,7 +14,7 @@ public class Frame extends FrameBase {
 		d.setVisible(true);
 
 		// Display an image
-		GraphicsPanel p = new GraphicsPanel(f.getLatestPhoto("images").getImage());
+		GraphicsPanel p = new GraphicsPanel(new Photo(new File("images/IMG_5428.JPG")).getImage());
 		d.add(p);
 		d.validate();
 
