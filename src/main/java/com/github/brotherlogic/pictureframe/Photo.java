@@ -14,8 +14,9 @@ public class Photo {
 	}
 
 	public Image getImage() throws IOException {
-		System.out.println(f.getName() + " -> " + Photo.class.getResourceAsStream(f.getName()));
-		return ImageIO.read(Photo.class.getResourceAsStream(f.getName()));
+		Image img = ImageIO.read(Photo.class.getResourceAsStream(f.getName()));
+		Image resizedImg = img.getScaledInstance(800, 480, Image.SCALE_SMOOTH);
+		return resizedImg;
 	}
 
 	public String getName() {
