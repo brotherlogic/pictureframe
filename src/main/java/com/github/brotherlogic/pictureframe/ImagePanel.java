@@ -6,11 +6,11 @@ import java.awt.Image;
 
 import javax.swing.JPanel;
 
-public class GraphicsPanel extends JPanel {
+public class ImagePanel extends JPanel {
 
 	Image img;
 
-	public GraphicsPanel(Image image) {
+	public ImagePanel(Image image) {
 		img = image;
 	}
 
