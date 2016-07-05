@@ -4,7 +4,9 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class FrameBase {
+import com.github.brotherlogic.javaserver.JavaServer;
+
+public abstract class FrameBase extends JavaServer {
 
 	protected int compareFiles(File o1, File o2) {
 		if (o1.lastModified() > o2.lastModified())
