@@ -10,7 +10,7 @@ public class FrameTest {
 
 	@Test
 	public void testGreeting() {
-		Frame f = new Frame();
+		Frame f = new Frame("madeup");
 		Assert.assertEquals("Running", f.getGreeting());
 	}
 
@@ -21,21 +21,21 @@ public class FrameTest {
 		Mockito.when(f1.lastModified()).thenReturn(10L);
 		Mockito.when(f2.lastModified()).thenReturn(20L);
 
-		Frame f = new Frame();
+		Frame f = new Frame("madeup");
 		Assert.assertTrue(f.compareFiles(f1, f2) < 0);
 		Assert.assertTrue(f.compareFiles(f2, f1) > 0);
 	}
 
 	@Test
 	public void testGetImage() {
-		Frame f = new Frame();
+		Frame f = new Frame("madeup");
 		Photo p = f.getLatestPhoto("images");
 		Assert.assertEquals("IMG_5428.JPG", p.getName());
 	}
 
 	@Test
 	public void testGetImageWithFakeDirectory() {
-		Frame f = new Frame();
+		Frame f = new Frame("madeup");
 		Photo p = f.getLatestPhoto("imageslblb");
 		Assert.assertNull(p);
 	}

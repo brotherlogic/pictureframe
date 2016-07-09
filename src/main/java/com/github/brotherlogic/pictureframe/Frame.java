@@ -1,12 +1,15 @@
 package com.github.brotherlogic.pictureframe;
 
+import io.grpc.BindableService;
+
 import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -15,18 +18,25 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 
-import io.grpc.BindableService;
-
 public class Frame extends FrameBase {
 
+	private DropboxConnector connector;
+
+	public Frame(String token) {
+		connector = new DropboxConnector(token);
+	}
+
 	public static void main(String[] args) throws Exception {
-		Option optionHost = OptionBuilder.withLongOpt("host").hasArg().withDescription("Hostname of server")
-				.create("h");
-		Option optionPort = OptionBuilder.withLongOpt("port").hasArg().withDescription("Port number of server")
-				.create("p");
+		Option optionHost = OptionBuilder.withLongOpt("host").hasArg()
+				.withDescription("Hostname of server").create("h");
+		Option optionPort = OptionBuilder.withLongOpt("port").hasArg()
+				.withDescription("Port number of server").create("p");
+		Option optionToken = OptionBuilder.withLongOpt("token").hasArg()
+				.withDescription("Token to use for dropbox").create("t");
 		Options options = new Options();
 		options.addOption(optionHost);
 		options.addOption(optionPort);
+		options.addOption(optionToken);
 		CommandLineParser parser = new GnuParser();
 		CommandLine line = parser.parse(options, args);
 
@@ -37,8 +47,11 @@ public class Frame extends FrameBase {
 		int port = 50051;
 		if (line.hasOption("port"))
 			port = Integer.parseInt(line.getOptionValue("p"));
+		String token = "unknown";
+		if (line.hasOption("token"))
+			token = line.getOptionValue("t");
 
-		Frame f = new Frame();
+		Frame f = new Frame(token);
 		f.Serve(host, port);
 	}
 
@@ -52,21 +65,56 @@ public class Frame extends FrameBase {
 		return new LinkedList<BindableService>();
 	}
 
+	public void syncAndDisplay() {
+		if (connector != null) {
+			try {
+				File out = new File("pics/");
+				out.mkdirs();
+				connector.syncFolder("/", out);
+				File[] list = out.listFiles();
+
+				if (list.length > 0) {
+					List<File> files = Arrays.asList(list);
+					Collections.shuffle(files);
+
+					Photo p = new Photo(files.get(0));
+					System.out.println("GETTING " + p + "," + files.get(0));
+					final ImagePanel imgPanel = new ImagePanel(p.getImage());
+					d.add(imgPanel);
+					d.validate();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void backgroundSync() {
+		while (true) {
+			SwingUtilities.invokeLater(new Runnable() {
+				@Override
+				public void run() {
+					syncAndDisplay();
+				}
+			});
+			try {
+				Thread.sleep(60 * 1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	FrameDisplay d;
+
 	@Override
 	public void localServe() {
-		FrameDisplay d = new FrameDisplay();
+		d = new FrameDisplay();
 		d.setSize(800, 480);
 		d.setLocationRelativeTo(null);
 		d.setVisible(true);
-
-		// Display an image
-		try {
-			ImagePanel p = new ImagePanel(new Photo(new File("images/IMG_5428.JPG")).getImage());
-			d.add(p);
-			d.validate();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		d.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		backgroundSync();
 	}
 }
