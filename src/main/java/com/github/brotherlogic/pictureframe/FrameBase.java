@@ -25,7 +25,7 @@ public abstract class FrameBase extends JavaServer {
 				}
 			});
 			if (files.length > 0)
-				return new Photo(files[0]);
+				return new Photo(files[files.length - 1]);
 		}
 		return null;
 	}
