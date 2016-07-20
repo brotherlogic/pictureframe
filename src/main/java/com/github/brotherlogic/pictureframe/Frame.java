@@ -1,7 +1,5 @@
 package com.github.brotherlogic.pictureframe;
 
-import io.grpc.BindableService;
-
 import java.io.File;
 import java.util.Arrays;
 import java.util.Collections;
@@ -18,6 +16,8 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 
+import io.grpc.BindableService;
+
 public class Frame extends FrameBase {
 
 	private DropboxConnector connector;
@@ -27,12 +27,12 @@ public class Frame extends FrameBase {
 	}
 
 	public static void main(String[] args) throws Exception {
-		Option optionHost = OptionBuilder.withLongOpt("host").hasArg()
-				.withDescription("Hostname of server").create("h");
-		Option optionPort = OptionBuilder.withLongOpt("port").hasArg()
-				.withDescription("Port number of server").create("p");
-		Option optionToken = OptionBuilder.withLongOpt("token").hasArg()
-				.withDescription("Token to use for dropbox").create("t");
+		Option optionHost = OptionBuilder.withLongOpt("host").hasArg().withDescription("Hostname of server")
+				.create("h");
+		Option optionPort = OptionBuilder.withLongOpt("port").hasArg().withDescription("Port number of server")
+				.create("p");
+		Option optionToken = OptionBuilder.withLongOpt("token").hasArg().withDescription("Token to use for dropbox")
+				.create("t");
 		Options options = new Options();
 		options.addOption(optionHost);
 		options.addOption(optionPort);
@@ -97,8 +97,9 @@ public class Frame extends FrameBase {
 					syncAndDisplay();
 				}
 			});
+			// Wait before updating the picture
 			try {
-				Thread.sleep(60 * 60 * 1000);
+				Thread.sleep(5 * 60 * 1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
