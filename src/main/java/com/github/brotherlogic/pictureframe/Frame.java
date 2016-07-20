@@ -1,6 +1,8 @@
 package com.github.brotherlogic.pictureframe;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -101,7 +103,10 @@ public class Frame extends FrameBase {
 			// Turn the display off
 			try {
 				System.out.println("Shutting down display");
-				Runtime.getRuntime().exec("xset -display :0.0 dpms force off");
+				Process p = Runtime.getRuntime().exec("xset -display :0.0 dpms force off");
+				BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+				for (String line = reader.readLine(); line != null; line = reader.readLine())
+					System.out.println("OUT = " + line);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
