@@ -97,6 +97,13 @@ public class Frame extends FrameBase {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+
+			// Turn the display off
+			try {
+				Runtime.getRuntime().exec("xset -display :0.0 dpms set off");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
