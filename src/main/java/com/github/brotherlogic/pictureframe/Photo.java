@@ -15,7 +15,16 @@ public class Photo {
 
 	public Image getImage() throws IOException {
 		Image img = ImageIO.read(f);
-		Image resizedImg = img.getScaledInstance(800, 480, Image.SCALE_SMOOTH);
+
+		int imgWidth = img.getWidth(null);
+		int imgHeight = img.getHeight(null);
+
+		double scaleFactor = (imgHeight + 0.0) / 480;
+
+		int scaledHeight = (int) (imgHeight / scaleFactor);
+		int scaledWidth = (int) (imgWidth / scaleFactor);
+
+		Image resizedImg = img.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
 		return resizedImg;
 	}
 
