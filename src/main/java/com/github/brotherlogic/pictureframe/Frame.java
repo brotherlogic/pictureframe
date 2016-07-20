@@ -93,13 +93,14 @@ public class Frame extends FrameBase {
 			});
 			// Wait before updating the picture
 			try {
-				Thread.sleep(5 * 60 * 1000);
+				Thread.sleep(2 * 60 * 1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 
 			// Turn the display off
 			try {
+				System.out.println("Shutting down display");
 				Runtime.getRuntime().exec("xset -display :0.0 dpms set off");
 			} catch (Exception e) {
 				e.printStackTrace();
