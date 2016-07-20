@@ -2,7 +2,6 @@ package com.github.brotherlogic.pictureframe;
 
 import java.io.File;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -71,14 +70,9 @@ public class Frame extends FrameBase {
 				File out = new File("pics/");
 				out.mkdirs();
 				connector.syncFolder("/", out);
-				File[] list = out.listFiles();
 
-				if (list.length > 0) {
-					List<File> files = Arrays.asList(list);
-					Collections.shuffle(files);
-
-					Photo p = new Photo(files.get(0));
-					System.out.println("GETTING " + p + "," + files.get(0));
+				Photo p = getLatestPhoto(out.getAbsolutePath());
+				if (p != null) {
 					final ImagePanel imgPanel = new ImagePanel(p.getImage());
 					d.add(imgPanel);
 					d.validate();
