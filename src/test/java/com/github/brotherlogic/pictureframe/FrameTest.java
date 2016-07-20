@@ -30,7 +30,7 @@ public class FrameTest {
 	public void testGetImage() {
 		Frame f = new Frame("madeup");
 		Photo p = f.getLatestPhoto("images");
-		Assert.assertEquals("IMG_5428.JPG", p.getName());
+		Assert.assertEquals("IMG_5394.JPG", p.getName());
 	}
 
 	@Test
