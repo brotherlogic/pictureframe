@@ -101,7 +101,7 @@ public class Frame extends FrameBase {
 			// Turn the display off
 			try {
 				System.out.println("Shutting down display");
-				Runtime.getRuntime().exec("xset -display :0.0 dpms set off");
+				Runtime.getRuntime().exec("xset -display :0.0 dpms force off");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
