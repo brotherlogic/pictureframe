@@ -1,5 +1,6 @@
 package com.github.brotherlogic.pictureframe;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -12,6 +13,7 @@ public class ImagePanel extends JPanel {
 
 	public ImagePanel(Image image) {
 		img = image;
+		setBackground(Color.BLACK);
 	}
 
 	@Override

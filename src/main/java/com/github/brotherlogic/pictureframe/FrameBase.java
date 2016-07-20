@@ -25,8 +25,6 @@ public abstract class FrameBase extends JavaServer {
 				}
 			});
 
-			System.out.println("HERE = " + Arrays.toString(files));
-
 			if (files.length > 0)
 				return new Photo(files[files.length - 1]);
 		}
