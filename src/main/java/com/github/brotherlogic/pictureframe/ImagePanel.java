@@ -16,7 +16,7 @@ public class ImagePanel extends JPanel {
 
 	@Override
 	public void paint(Graphics g) {
-		g.drawImage(img, 0, 0, null);
+		g.drawImage(img, (800 - img.getWidth(null)) / 2, 0, null);
 	}
 
 	@Override
