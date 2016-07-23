@@ -12,6 +12,7 @@ public class ImagePanel extends JPanel {
 	Image img;
 
 	public ImagePanel(Image image) {
+		super();
 		img = image;
 		setBackground(Color.BLACK);
 	}
