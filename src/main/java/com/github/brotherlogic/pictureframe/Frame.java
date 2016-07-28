@@ -72,8 +72,11 @@ public class Frame extends FrameBase {
 				connector.syncFolder("/", out);
 
 				Photo p = getLatestPhoto(out.getAbsolutePath());
+				System.out.println("Got picture: " + p.getName());
 				if (p != null) {
 					final ImagePanel imgPanel = new ImagePanel(p.getImage());
+					d.removeAll();
+					d.invalidate();
 					d.add(imgPanel);
 					d.validate();
 				}
