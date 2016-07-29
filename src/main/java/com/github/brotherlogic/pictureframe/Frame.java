@@ -66,34 +66,36 @@ public class Frame extends FrameBase {
 
 	public void syncAndDisplay() {
 		if (connector != null) {
-			try {
-				File out = new File("pics/");
-				out.mkdirs();
-				connector.syncFolder("/", out);
+			SwingUtilities.invokeLater(new Runnable() {
+				@Override
+				public void run() {
+					d.getContentPane().removeAll();
 
-				Photo p = getLatestPhoto(out.getAbsolutePath());
-				System.out.println("Got picture: " + p.getName());
-				if (p != null) {
-					final ImagePanel imgPanel = new ImagePanel(p.getImage());
-					d.removeAll();
-					d.invalidate();
-					d.add(imgPanel);
-					d.validate();
+					File out = new File("pics/");
+					out.mkdirs();
+					try {
+						connector.syncFolder("/", out);
+
+						Photo p = getLatestPhoto(out.getAbsolutePath());
+						System.out.println("Got picture: " + p.getName());
+						if (p != null) {
+							final ImagePanel imgPanel = new ImagePanel(p.getImage());
+							d.add(imgPanel);
+							System.out.println("Added picture");
+							d.revalidate();
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			});
 		}
 	}
 
 	public void backgroundSync() {
 		while (true) {
-			SwingUtilities.invokeLater(new Runnable() {
-				@Override
-				public void run() {
-					syncAndDisplay();
-				}
-			});
+			syncAndDisplay();
+
 			// Wait before updating the picture
 			try {
 				Thread.sleep(2 * 60 * 1000);
