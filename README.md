@@ -1,3 +1,3 @@
 # PictureFrame
 
-Pictureframe shows pictures.
+Pictureframe shows pictures - mainly from DropBox.
