@@ -2,6 +2,7 @@ package com.github.brotherlogic.pictureframe;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Comparator;
 
 import com.github.brotherlogic.javaserver.JavaServer;
@@ -29,6 +30,25 @@ public abstract class FrameBase extends JavaServer {
 
 			if (files.length > 0)
 				return new Photo(files[files.length - 1]);
+		}
+		return null;
+	}
+
+	protected Photo getTimedLatestPhoto(String directory) {
+		File[] files = new File(directory).listFiles();
+		if (files != null) {
+			Arrays.sort(files, new Comparator<File>() {
+				@Override
+				public int compare(File o1, File o2) {
+					return compareFiles(o1, o2);
+				}
+			});
+
+			Calendar cal = Calendar.getInstance();
+			int index = (cal.get(Calendar.HOUR_OF_DAY) - 7) % files.length;
+
+			if (files.length > index)
+				return new Photo(files[files.length - 1 - index]);
 		}
 		return null;
 	}

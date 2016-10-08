@@ -34,9 +34,23 @@ public class FrameTest {
 	}
 
 	@Test
+	public void testTimedGetImage() {
+		Frame f = new Frame("madeup");
+		Photo p = f.getTimedLatestPhoto("images");
+		Assert.assertTrue(p.getName().length() > 0);
+	}
+
+	@Test
 	public void testGetImageWithFakeDirectory() {
 		Frame f = new Frame("madeup");
 		Photo p = f.getLatestPhoto("imageslblb");
+		Assert.assertNull(p);
+	}
+
+	@Test
+	public void testGetTimedImageWithFakeDirectory() {
+		Frame f = new Frame("madeup");
+		Photo p = f.getTimedLatestPhoto("imageslblb");
 		Assert.assertNull(p);
 	}
 
