@@ -9,7 +9,9 @@ import com.github.brotherlogic.javaserver.JavaServer;
 public abstract class FrameBase extends JavaServer {
 
 	protected int compareFiles(File o1, File o2) {
-		if (o1.lastModified() > o2.lastModified())
+		if (o1.lastModified() == o2.lastModified())
+			return 0;
+		else if (o1.lastModified() > o2.lastModified())
 			return 1;
 		else
 			return -1;
