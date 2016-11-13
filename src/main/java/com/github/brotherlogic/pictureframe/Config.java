@@ -10,6 +10,10 @@ public class Config {
 		protoConfig = proto.ConfigOuterClass.Config.parseFrom(data);
 	}
 
+	public byte[] dumpConfig() {
+		return protoConfig.toByteArray();
+	}
+
 	public proto.ConfigOuterClass.Config getConfig() {
 		return protoConfig;
 	}
