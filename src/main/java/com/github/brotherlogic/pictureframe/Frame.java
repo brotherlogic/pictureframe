@@ -1,6 +1,8 @@
 package com.github.brotherlogic.pictureframe;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,14 +17,33 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 
+import com.google.protobuf.InvalidProtocolBufferException;
+
 import io.grpc.BindableService;
 
 public class Frame extends FrameBase {
 
 	private DropboxConnector connector;
+	private Config config;
 
-	public Frame(String token) {
+	public Frame(String token, File configFile) {
 		connector = new DropboxConnector(token);
+
+		try {
+			if (configFile != null) {
+				FileInputStream fis = new FileInputStream(configFile);
+				config = new Config(proto.ConfigOuterClass.Config.parseFrom(fis).toByteArray());
+			} else {
+				config = new Config(new byte[0]);
+			}
+		} catch (IOException e) {
+			try {
+				config = new Config(new byte[0]);
+			} catch (InvalidProtocolBufferException e2) {
+				// Shouldn't get here with an empty byte buffer
+				e2.printStackTrace();
+			}
+		}
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -32,6 +53,8 @@ public class Frame extends FrameBase {
 				.create("p");
 		Option optionToken = OptionBuilder.withLongOpt("token").hasArg().withDescription("Token to use for dropbox")
 				.create("t");
+		Option optionConfig = OptionBuilder.withLongOpt("config").hasArg().withDescription("Config file to user")
+				.create("c");
 		Options options = new Options();
 		options.addOption(optionHost);
 		options.addOption(optionPort);
@@ -50,7 +73,11 @@ public class Frame extends FrameBase {
 		if (line.hasOption("token"))
 			token = line.getOptionValue("t");
 
-		Frame f = new Frame(token);
+		String configLocation = ".config";
+		if (line.hasOption("config"))
+			configLocation = line.getOptionValue("c");
+
+		Frame f = new Frame(token, new File(configLocation));
 		f.Serve(host, port);
 	}
 
