@@ -46,6 +46,10 @@ public class Frame extends FrameBase {
 		}
 	}
 
+	public void runWebServer() throws IOException {
+		new HttpServer();
+	}
+
 	public static void main(String[] args) throws Exception {
 		Option optionHost = OptionBuilder.withLongOpt("host").hasArg().withDescription("Hostname of server")
 				.create("h");
@@ -78,6 +82,7 @@ public class Frame extends FrameBase {
 			configLocation = line.getOptionValue("c");
 
 		Frame f = new Frame(token, new File(configLocation));
+		f.runWebServer();
 		f.Serve(host, port);
 	}
 
