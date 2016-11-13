@@ -128,6 +128,7 @@
             <exclude>**/FrameDisplay.class</exclude>
             <exclude>**/ImagePanel.class</exclude>
             <exclude>**/DropboxConnector.class</exclude>
+            <exclude>**/ConfigOuterClass*.class</exclude>
 	  </excludes>
 	</configuration>
 	<executions>
