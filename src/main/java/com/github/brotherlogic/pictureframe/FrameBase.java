@@ -45,10 +45,11 @@ public abstract class FrameBase extends JavaServer {
 			});
 
 			Calendar cal = Calendar.getInstance();
-			int index = (cal.get(Calendar.HOUR_OF_DAY) - 7) % files.length;
+			int index = Math.abs(cal.get(Calendar.HOUR_OF_DAY) - 7) % files.length;
 
-			if (files.length > index)
+			if (files.length > index) {
 				return new Photo(files[files.length - 1 - index]);
+			}
 		}
 		return null;
 	}
