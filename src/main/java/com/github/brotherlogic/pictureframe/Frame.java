@@ -17,14 +17,13 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 
-import com.google.protobuf.InvalidProtocolBufferException;
-
 import io.grpc.BindableService;
 
 public class Frame extends FrameBase {
 
 	private DropboxConnector connector;
 	private Config config;
+	private File configFile;
 
 	public Frame(String token, File configFile) {
 		connector = new DropboxConnector(token);
@@ -34,20 +33,15 @@ public class Frame extends FrameBase {
 				FileInputStream fis = new FileInputStream(configFile);
 				config = new Config(proto.ConfigOuterClass.Config.parseFrom(fis).toByteArray());
 			} else {
-				config = new Config(new byte[0]);
+				config = new Config();
 			}
 		} catch (IOException e) {
-			try {
-				config = new Config(new byte[0]);
-			} catch (InvalidProtocolBufferException e2) {
-				// Shouldn't get here with an empty byte buffer
-				e2.printStackTrace();
-			}
+			config = new Config();
 		}
 	}
 
 	public void runWebServer() throws IOException {
-		new HttpServer();
+		new HttpServer(config, this);
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -91,6 +85,10 @@ public class Frame extends FrameBase {
 		return "PictureFrame";
 	}
 
+	public void saveConfig() {
+
+	}
+
 	@Override
 	public List<BindableService> getServices() {
 		return new LinkedList<BindableService>();
@@ -122,6 +120,11 @@ public class Frame extends FrameBase {
 				}
 			});
 		}
+	}
+
+	@Override
+	public Config getConfig() {
+		return config;
 	}
 
 	public void backgroundSync() {

@@ -26,4 +26,14 @@ public class ConfigTest {
 
 	}
 
+	@Test
+	public void testSetLowConfig() {
+		com.github.brotherlogic.pictureframe.Config c = new com.github.brotherlogic.pictureframe.Config();
+		c.setNumberOfPhotos(0);
+		Assert.assertTrue(c.getConfig().getRecentImages() > 0);
+
+		c.setNumberOfPhotos(20);
+		Assert.assertEquals(c.getConfig().getRecentImages(), 20);
+	}
+
 }
