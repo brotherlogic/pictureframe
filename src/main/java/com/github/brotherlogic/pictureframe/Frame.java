@@ -2,6 +2,7 @@ package com.github.brotherlogic.pictureframe;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -30,6 +31,7 @@ public class Frame extends FrameBase {
 
 		try {
 			if (configFile != null) {
+				this.configFile = configFile;
 				FileInputStream fis = new FileInputStream(configFile);
 				config = new Config(proto.ConfigOuterClass.Config.parseFrom(fis).toByteArray());
 			} else {
@@ -86,7 +88,14 @@ public class Frame extends FrameBase {
 	}
 
 	public void saveConfig() {
-
+		try {
+			System.out.println("SAVING TO " + configFile);
+			FileOutputStream fos = new FileOutputStream(configFile);
+			config.getConfig().writeTo(fos);
+			fos.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
