@@ -5,7 +5,7 @@
   <groupId>com.github.brotherlogic.pictureframe</groupId>
   <artifactId>pictureframe</artifactId>
   <packaging>jar</packaging>
-  <version>0.54-SNAPSHOT</version>
+  <version>0.56-SNAPSHOT</version>
 
   <name>${project.groupId}:${project.artifactId}</name>
   <description>Interface for consuming cards</description>
@@ -103,6 +103,13 @@
   </dependencies>
 
   <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+
     <extensions>
       <extension>
         <groupId>org.apache.maven.wagon</groupId>
