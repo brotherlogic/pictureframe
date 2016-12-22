@@ -79,6 +79,7 @@ public class Frame extends FrameBase {
 
 		Frame f = new Frame(token, new File(configLocation));
 		f.runWebServer();
+		System.out.println("HERE = " + host + " and " + port);
 		f.Serve(host, port);
 	}
 
