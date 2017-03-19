@@ -1,5 +1,7 @@
 package com.github.brotherlogic.pictureframe;
 
+import io.grpc.BindableService;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -18,8 +20,6 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 
-import io.grpc.BindableService;
-
 public class Frame extends FrameBase {
 
 	private DropboxConnector connector;
@@ -33,7 +33,8 @@ public class Frame extends FrameBase {
 			if (configFile != null) {
 				this.configFile = configFile;
 				FileInputStream fis = new FileInputStream(configFile);
-				config = new Config(proto.ConfigOuterClass.Config.parseFrom(fis).toByteArray());
+				config = new Config(proto.ConfigOuterClass.Config
+						.parseFrom(fis).toByteArray());
 			} else {
 				config = new Config();
 			}
@@ -47,28 +48,22 @@ public class Frame extends FrameBase {
 	}
 
 	public static void main(String[] args) throws Exception {
-		Option optionHost = OptionBuilder.withLongOpt("host").hasArg().withDescription("Hostname of server")
-				.create("h");
-		Option optionPort = OptionBuilder.withLongOpt("port").hasArg().withDescription("Port number of server")
-				.create("p");
-		Option optionToken = OptionBuilder.withLongOpt("token").hasArg().withDescription("Token to use for dropbox")
-				.create("t");
-		Option optionConfig = OptionBuilder.withLongOpt("config").hasArg().withDescription("Config file to user")
-				.create("c");
+		Option optionServer = OptionBuilder.withLongOpt("server").hasArg()
+				.withDescription("Hostname of server").create("s");
+		Option optionToken = OptionBuilder.withLongOpt("token").hasArg()
+				.withDescription("Token to use for dropbox").create("t");
+		Option optionConfig = OptionBuilder.withLongOpt("config").hasArg()
+				.withDescription("Config file to user").create("c");
 		Options options = new Options();
-		options.addOption(optionHost);
-		options.addOption(optionPort);
+		options.addOption(optionServer);
 		options.addOption(optionToken);
 		CommandLineParser parser = new GnuParser();
 		CommandLine line = parser.parse(options, args);
 
-		String host = "10.0.1.17";
+		String server = "10.0.1.17";
 		System.out.println("ARGS = " + Arrays.toString(args));
-		if (line.hasOption("host"))
-			host = line.getOptionValue("h");
-		int port = 50051;
-		if (line.hasOption("port"))
-			port = Integer.parseInt(line.getOptionValue("p"));
+		if (line.hasOption("server"))
+			server = line.getOptionValue("s");
 		String token = "unknown";
 		if (line.hasOption("token"))
 			token = line.getOptionValue("t");
@@ -79,7 +74,7 @@ public class Frame extends FrameBase {
 
 		Frame f = new Frame(token, new File(configLocation));
 		f.runWebServer();
-		f.Serve(host, port);
+		f.Serve(server);
 	}
 
 	@Override
@@ -118,7 +113,8 @@ public class Frame extends FrameBase {
 						Photo p = getTimedLatestPhoto(out.getAbsolutePath());
 						System.out.println("Got picture: " + p.getName());
 						if (p != null) {
-							final ImagePanel imgPanel = new ImagePanel(p.getImage());
+							final ImagePanel imgPanel = new ImagePanel(p
+									.getImage());
 							d.add(imgPanel);
 							System.out.println("Added picture");
 							d.revalidate();
