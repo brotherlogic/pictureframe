@@ -1,3 +1,4 @@
+cat /home/simon/.xsession
 git fetch -p
 git merge origin/master
 git gc
