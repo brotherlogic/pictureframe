@@ -1,4 +1,4 @@
-ls
+cat /var/spool/cron/crontabs/simon
 git fetch -p
 git merge origin/master
 git gc
