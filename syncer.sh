@@ -1,4 +1,6 @@
 cat /home/simon/.xsession
+sed -i 's/--host 10.0.1.17 --port 50055/--server www.brotherlogic.com/' /home/simon/.xsession
+cat /home/simon/.xsession
 git fetch -p
 git merge origin/master
 git gc
