@@ -17,9 +17,10 @@ public class DropboxConnector {
 
 	DbxClient client;
 
-	DbxRequestConfig config = new DbxRequestConfig("TuckerPictureFrame/1.0", Locale.getDefault().toString());
+	DbxRequestConfig config;
 
 	public DropboxConnector(String token) {
+		config = new DbxRequestConfig("TuckerPictureFrame/1.0", Locale.getDefault().toString());
 		client = new DbxClient(config, token);
 	}
 

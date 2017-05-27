@@ -22,7 +22,7 @@ public abstract class FrameBase extends JavaServer {
 
 	protected Photo getLatestPhoto(String directory) {
 		File[] files = new File(directory).listFiles();
-		if (files != null) {
+		if (files != null && files.length > 0) {
 			Arrays.sort(files, new Comparator<File>() {
 				@Override
 				public int compare(File o1, File o2) {
@@ -38,7 +38,7 @@ public abstract class FrameBase extends JavaServer {
 
 	protected Photo getTimedLatestPhoto(String directory) {
 		File[] files = new File(directory).listFiles();
-		if (files != null) {
+		if (files != null && files.length > 0) {
 			Arrays.sort(files, new Comparator<File>() {
 				@Override
 				public int compare(File o1, File o2) {
