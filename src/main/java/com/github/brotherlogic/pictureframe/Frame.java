@@ -1,7 +1,5 @@
 package com.github.brotherlogic.pictureframe;
 
-import io.grpc.BindableService;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -20,6 +18,8 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 
+import io.grpc.BindableService;
+
 public class Frame extends FrameBase {
 
 	private DropboxConnector connector;
@@ -33,8 +33,7 @@ public class Frame extends FrameBase {
 			if (configFile != null) {
 				this.configFile = configFile;
 				FileInputStream fis = new FileInputStream(configFile);
-				config = new Config(proto.ConfigOuterClass.Config
-						.parseFrom(fis).toByteArray());
+				config = new Config(proto.ConfigOuterClass.Config.parseFrom(fis).toByteArray());
 			} else {
 				config = new Config();
 			}
@@ -48,12 +47,12 @@ public class Frame extends FrameBase {
 	}
 
 	public static void main(String[] args) throws Exception {
-		Option optionServer = OptionBuilder.withLongOpt("server").hasArg()
-				.withDescription("Hostname of server").create("s");
-		Option optionToken = OptionBuilder.withLongOpt("token").hasArg()
-				.withDescription("Token to use for dropbox").create("t");
-		Option optionConfig = OptionBuilder.withLongOpt("config").hasArg()
-				.withDescription("Config file to user").create("c");
+		Option optionServer = OptionBuilder.withLongOpt("server").hasArg().withDescription("Hostname of server")
+				.create("s");
+		Option optionToken = OptionBuilder.withLongOpt("token").hasArg().withDescription("Token to use for dropbox")
+				.create("t");
+		Option optionConfig = OptionBuilder.withLongOpt("config").hasArg().withDescription("Config file to user")
+				.create("c");
 		Options options = new Options();
 		options.addOption(optionServer);
 		options.addOption(optionToken);
@@ -111,10 +110,10 @@ public class Frame extends FrameBase {
 						connector.syncFolder("/", out);
 
 						Photo p = getTimedLatestPhoto(out.getAbsolutePath());
-						System.out.println("Got picture: " + p.getName());
 						if (p != null) {
-							final ImagePanel imgPanel = new ImagePanel(p
-									.getImage());
+							System.out.println("Got picture: " + p.getName());
+
+							final ImagePanel imgPanel = new ImagePanel(p.getImage());
 							d.add(imgPanel);
 							System.out.println("Added picture");
 							d.revalidate();
