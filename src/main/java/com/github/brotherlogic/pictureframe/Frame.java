@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Properties;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -47,6 +48,17 @@ public class Frame extends FrameBase {
 	}
 
 	public static void main(String[] args) throws Exception {
+
+		// Read the resources and print to stdout
+		try {
+			Properties p = new Properties();
+			p.load((Frame.class.getResourceAsStream("properties.txt")));
+			System.out.println(p.getProperty("version"));
+			System.out.println(p.getProperty("build.date"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		Option optionServer = OptionBuilder.withLongOpt("server").hasArg().withDescription("Hostname of server")
 				.create("s");
 		Option optionToken = OptionBuilder.withLongOpt("token").hasArg().withDescription("Token to use for dropbox")
