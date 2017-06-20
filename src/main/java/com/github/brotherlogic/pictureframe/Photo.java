@@ -99,6 +99,10 @@ public class Photo {
 	public Image getImage() throws IOException {
 		Image img = ImageIO.read(f);
 
+		if (img == null) {
+			return img;
+		}
+
 		int imgWidth = img.getWidth(null);
 		int imgHeight = img.getHeight(null);
 
