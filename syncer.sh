@@ -1,4 +1,5 @@
 git fetch -p
+cat ~/.xsession
 git merge origin/master
 git gc
 rm pictureframe.jar
