@@ -26,8 +26,10 @@ public class Frame extends FrameBase {
 	private DropboxConnector connector;
 	private Config config;
 	private File configFile;
+	private boolean random = false;
 
-	public Frame(String token, File configFile) {
+	public Frame(String token, File configFile, boolean r) {
+		random = r;
 		connector = new DropboxConnector(token);
 
 		try {
@@ -65,9 +67,12 @@ public class Frame extends FrameBase {
 				.create("t");
 		Option optionConfig = OptionBuilder.withLongOpt("config").hasArg().withDescription("Config file to user")
 				.create("c");
+		Option optionRandom = OptionBuilder.withLongOpt("random").hasArg().withDescription("Choose photo at random")
+				.create("r");
 		Options options = new Options();
 		options.addOption(optionServer);
 		options.addOption(optionToken);
+		options.addOption(optionRandom);
 		CommandLineParser parser = new GnuParser();
 		CommandLine line = parser.parse(options, args);
 
@@ -78,12 +83,15 @@ public class Frame extends FrameBase {
 		String token = "unknown";
 		if (line.hasOption("token"))
 			token = line.getOptionValue("t");
+		boolean random = false;
+		if (line.hasOption("random"))
+			random = (line.getOptionValue("r").equals("true"));
 
 		String configLocation = ".config";
 		if (line.hasOption("config"))
 			configLocation = line.getOptionValue("c");
 
-		Frame f = new Frame(token, new File(configLocation));
+		Frame f = new Frame(token, new File(configLocation), random);
 		f.runWebServer();
 		f.Serve(server);
 	}
@@ -121,7 +129,12 @@ public class Frame extends FrameBase {
 					try {
 						connector.syncFolder("/", out);
 
-						Photo p = getTimedLatestPhoto(out.getAbsolutePath());
+						Photo p = null;
+						if (random)
+							p = getRandomPhoto(out.getAbsolutePath());
+						else
+							p = getTimedLatestPhoto(out.getAbsolutePath());
+
 						if (p != null) {
 							System.out.println("Got picture: " + p.getName());
 
