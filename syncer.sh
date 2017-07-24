@@ -1,4 +1,4 @@
-if ping -c 1 www.github.com; then
+if ping -c 1 www.github.com &> /dev/null ; then
     git fetch -p
     git merge origin/master
     git gc
