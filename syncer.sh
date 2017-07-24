@@ -1,8 +1,5 @@
-cat /home/simon/.xsession
-sed -i 's/--host 67.174.252.40 --port 50055/--server www.brotherlogic.com/' /home/simon/.xsession
-cat /home/simon/.xsession
+ping -c 5 www.github.com
 git fetch -p
-cat ~/.xsession
 git merge origin/master
 git gc
 rm pictureframe.jar
