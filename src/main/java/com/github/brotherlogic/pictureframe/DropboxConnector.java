@@ -50,7 +50,9 @@ public class DropboxConnector {
 						outputDirectory.getAbsolutePath() + "/" + child.name);
 				try {
 					client.getFile(child.path, null, outputStream);
-				} finally {
+				} catch (Exception e) {
+					e.printStackTrace();
+				}finally {
 					outputStream.close();
 				}
 			}
