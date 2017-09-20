@@ -45,6 +45,7 @@ public class DropboxConnector {
 		DbxEntry.WithChildren listing = client.getMetadataWithChildren(inputDirectory);
 		for (DbxEntry child : listing.children) {
 			File f = new File(outputDirectory.getAbsolutePath() + "/" + child.name);
+			System.out.println("Syncing with " + child.name + " -> " + f.exists());
 			if (!f.exists()) {
 				FileOutputStream outputStream = new FileOutputStream(
 						outputDirectory.getAbsolutePath() + "/" + child.name);
