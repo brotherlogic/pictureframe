@@ -127,7 +127,7 @@ public class Frame extends FrameBase {
 					File out = new File("pics/");
 					out.mkdirs();
 					try {
-						connector.syncFolder("/", out);
+						connector.syncFolder("", out);
 
 						Photo p = null;
 						if (random)
