@@ -5,7 +5,7 @@
   <groupId>com.github.brotherlogic.pictureframe</groupId>
   <artifactId>pictureframe</artifactId>
   <packaging>jar</packaging>
-  <version>0.107-SNAPSHOT</version>
+  <version>0.107</version>
 
   <name>${project.groupId}:${project.artifactId}</name>
   <description>Interface for consuming cards</description>
@@ -51,7 +51,7 @@
     <connection>scm:git:git@github.com:brotherogic/pictureframe.git</connection>
     <developerConnection>scm:git:git@github.com:brotherlogic/pictureframe.git</developerConnection>
     <url>git@github.com:brotherlogic/pictureframe.git</url>
-    <tag>HEAD</tag>
+    <tag>pictureframe-0.107</tag>
   </scm>
 
   <prerequisites>
