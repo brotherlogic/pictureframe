@@ -6,6 +6,8 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
+import java.util.Map;
+import java.util.TreeMap;
 
 import com.github.brotherlogic.javaserver.JavaServer;
 
@@ -45,6 +47,12 @@ public abstract class FrameBase extends JavaServer {
 	protected Photo getTimedLatestPhoto(String directory) {
 		File[] files = new File(directory).listFiles();
 		if (files != null && files.length > 0) {
+			Map<String, File> lsMap = new TreeMap<String, File>();
+			for (File f : files) {
+				lsMap.put(f.getName().toLowerCase(), f);
+			}
+			files = lsMap.values().toArray(new File[0]);
+
 			Arrays.sort(files, new Comparator<File>() {
 				@Override
 				public int compare(File o1, File o2) {
