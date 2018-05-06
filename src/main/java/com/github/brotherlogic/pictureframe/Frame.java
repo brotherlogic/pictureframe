@@ -69,10 +69,17 @@ public class Frame extends FrameBase {
 				.create("c");
 		Option optionRandom = OptionBuilder.withLongOpt("random").hasArg().withDescription("Choose photo at random")
 				.create("r");
+		Option optionStart = OptionBuilder.withLongOpt("stime").hasArg().withDescription("Start Time")
+				.create("st");
+		Option optionEnd = OptionBuilder.withLongOpt("etime").hasArg().withDescription("End Time")
+				.create("et");
+
 		Options options = new Options();
 		options.addOption(optionServer);
 		options.addOption(optionToken);
 		options.addOption(optionRandom);
+		options.addOption(optionStart);
+		options.addOption(optionEnd);
 		CommandLineParser parser = new GnuParser();
 		CommandLine line = parser.parse(options, args);
 
@@ -92,6 +99,14 @@ public class Frame extends FrameBase {
 			configLocation = line.getOptionValue("c");
 
 		Frame f = new Frame(token, new File(configLocation), random);
+
+		if (line.hasOption("stime")) {
+		    int startTime = Integer.parseInt(line.getOptionValue("st"));
+		    int endTime = Integer.parseInt(line.getOptionValue("et"));
+
+		    f.setTime(startTime,endTime);
+		}
+		
 		f.runWebServer();
 		f.Serve(server);
 	}
