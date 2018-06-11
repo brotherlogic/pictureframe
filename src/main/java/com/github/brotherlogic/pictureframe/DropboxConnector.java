@@ -28,17 +28,13 @@ public class DropboxConnector {
 
 
 	public void syncFolder(String inputDirectory, File outputDirectory) throws Exception {
-		System.out.println("SEARCHING: " + inputDirectory);
 		ListFolderResult result = client.files().listFolder(inputDirectory);
 		for (Metadata child : result.getEntries()) {
 			File f = new File(outputDirectory.getAbsolutePath() + "/" + child.getPathDisplay());
-			System.out.println("Syncing with " + child.getPathDisplay() + " -> " + f.exists());
 			if (!f.exists()) {
 				FileOutputStream outputStream = new FileOutputStream(
 						outputDirectory.getAbsolutePath() + "/" + child.getPathDisplay());
 				try {
-					System.out.println("FROM: " + child.getPathDisplay());
-					System.out.println("TO: " + outputDirectory.getAbsolutePath() + "/" + child.getPathDisplay());
 					client.files().download(child.getPathDisplay()).download(outputStream);
 				} catch (Exception e) {
 					e.printStackTrace();
