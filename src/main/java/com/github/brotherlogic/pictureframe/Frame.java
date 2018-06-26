@@ -123,7 +123,7 @@ public class Frame extends FrameBase {
 			config.getConfig().writeTo(fos);
 			fos.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+		    //Pass
 		}
 	}
 

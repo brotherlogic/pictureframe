@@ -125,11 +125,11 @@ public class Photo {
 				newImage = transformImage(toBufferedImage(newImage), transform);
 			}
 		} catch (MetadataException me) {
-			me.printStackTrace();
+		    //Pass
 		} catch (ImageProcessingException e) {
-			e.printStackTrace();
+		    //Pass
 		} catch (Exception e) {
-			e.printStackTrace();
+		    //Pass
 		}
 
 		return newImage;
