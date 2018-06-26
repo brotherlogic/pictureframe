@@ -37,7 +37,7 @@ public class DropboxConnector {
 				try {
 					client.files().download(child.getPathDisplay()).download(outputStream);
 				} catch (Exception e) {
-					e.printStackTrace();
+				    //Pass
 				}finally {
 					outputStream.close();
 				}

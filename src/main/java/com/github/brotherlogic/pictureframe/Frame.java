@@ -58,7 +58,7 @@ public class Frame extends FrameBase {
 			System.out.println(p.getProperty("version"));
 			System.out.println(p.getProperty("build.date"));
 		} catch (Exception e) {
-			e.printStackTrace();
+		    e.printStackTrace();
 		}
 
 		Option optionServer = OptionBuilder.withLongOpt("server").hasArg().withDescription("Hostname of server")
@@ -159,7 +159,7 @@ public class Frame extends FrameBase {
 							d.revalidate();
 						}
 					} catch (Exception e) {
-						e.printStackTrace();
+					    //Don't care about failures here
 					}
 				}
 			});
@@ -179,7 +179,7 @@ public class Frame extends FrameBase {
 			try {
 				Thread.sleep(2 * 60 * 1000);
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+			    //pass
 			}
 		}
 	}
