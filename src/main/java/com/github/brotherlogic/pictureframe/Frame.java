@@ -143,7 +143,10 @@ public class Frame extends FrameBase {
 					out.mkdirs();
 					try {
 						connector.syncFolder("", out);
-
+					} catch (Exception e) {
+					    System.err.println("Sync Failure!");
+					}
+					try{
 						Photo p = null;
 						if (random)
 							p = getRandomPhoto(out.getAbsolutePath());
