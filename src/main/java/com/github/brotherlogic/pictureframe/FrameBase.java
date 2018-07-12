@@ -74,10 +74,6 @@ public abstract class FrameBase extends JavaServer {
 	protected Photo getRandomPhoto(String directory) {
 		File[] files = new File(directory).listFiles();
 
-		if (rFiles != null)
-			System.out.println("Getting RANDOM photo: " + rFiles.size());
-		else
-			System.out.println("Getting RANDOM photo: " + rFiles);
 		if (rFiles == null || files.length != rFiles.size()) {
 			rPointer = 0;
 			rFiles = new LinkedList<File>(Arrays.asList(files));

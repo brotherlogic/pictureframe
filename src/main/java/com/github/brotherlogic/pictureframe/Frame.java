@@ -55,8 +55,6 @@ public class Frame extends FrameBase {
 		try {
 			Properties p = new Properties();
 			p.load((Frame.class.getResourceAsStream("properties.txt")));
-			System.out.println(p.getProperty("version"));
-			System.out.println(p.getProperty("build.date"));
 		} catch (Exception e) {
 		    e.printStackTrace();
 		}
@@ -84,7 +82,6 @@ public class Frame extends FrameBase {
 		CommandLine line = parser.parse(options, args);
 
 		String server = "10.0.1.17";
-		System.out.println("ARGS = " + Arrays.toString(args));
 		if (line.hasOption("server"))
 			server = line.getOptionValue("s");
 		String token = "unknown";
@@ -118,7 +115,6 @@ public class Frame extends FrameBase {
 
 	public void saveConfig() {
 		try {
-			System.out.println("SAVING TO " + configFile);
 			FileOutputStream fos = new FileOutputStream(configFile);
 			config.getConfig().writeTo(fos);
 			fos.close();
@@ -144,7 +140,7 @@ public class Frame extends FrameBase {
 					try {
 						connector.syncFolder("", out);
 					} catch (Exception e) {
-					    System.err.println("Sync Failure!");
+					    System.err.println("Sync Failure!");					    
 					}
 					try{
 						Photo p = null;
@@ -154,11 +150,8 @@ public class Frame extends FrameBase {
 							p = getTimedLatestPhoto(out.getAbsolutePath());
 
 						if (p != null) {
-							System.out.println("Got picture: " + p.getName());
-
 							final ImagePanel imgPanel = new ImagePanel(p.getImage());
 							d.add(imgPanel);
-							System.out.println("Added picture");
 							d.revalidate();
 						}
 					} catch (Exception e) {
