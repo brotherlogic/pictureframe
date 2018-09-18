@@ -1,5 +1,5 @@
 df -h
-ls ~
+ls -ltr ~
 if ping -c 1 www.github.com > /dev/null 2>&1 ; then
     git fetch -p
     git merge origin/master
