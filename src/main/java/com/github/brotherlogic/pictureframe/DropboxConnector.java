@@ -13,6 +13,7 @@ import com.dropbox.core.v1.DbxEntry;
 import com.dropbox.core.v2.DbxClientV2;
 import com.dropbox.core.v2.files.ListFolderResult;
 import com.dropbox.core.v2.files.Metadata;
+import com.dropbox.core.v2.files.FileMetadata;
 
 
 public class DropboxConnector {
@@ -31,7 +32,13 @@ public class DropboxConnector {
 		ListFolderResult result = client.files().listFolder(inputDirectory);
 		for (Metadata child : result.getEntries()) {
 			File f = new File(outputDirectory.getAbsolutePath() + "/" + child.getPathDisplay());
-			if (!f.exists()) {
+			boolean needsRefresh = false;
+					if (child instanceof FileMetadata) {
+						if (f.exists() && f.length() != ((FileMetadata)child).getSize()) {
+						    needsRefresh = true;
+						}
+					}
+			if (!f.exists() || needsRefresh) {
 				FileOutputStream outputStream = new FileOutputStream(
 						outputDirectory.getAbsolutePath() + "/" + child.getPathDisplay());
 				try {
