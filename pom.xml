@@ -5,7 +5,7 @@
   <groupId>com.github.brotherlogic.pictureframe</groupId>
   <artifactId>pictureframe</artifactId>
   <packaging>jar</packaging>
-  <version>0.138-SNAPSHOT</version>
+  <version>0.141-SNAPSHOT</version>
 
   <name>${project.groupId}:${project.artifactId}</name>
   <description>Interface for consuming cards</description>
@@ -21,7 +21,7 @@
   <distributionManagement>
     <repository>
       <id>ssh-repository</id>
-      <url>scpexe://simon@192.168.86.26/home/simon/codestore/${project.artifactId}/</url>
+      <url>scpexe://simon@192.168.86.34/home/simon/codestore/${project.artifactId}/</url>
     </repository>
   </distributionManagement>
   
