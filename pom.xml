@@ -8,8 +8,8 @@
   <version>0.142-SNAPSHOT</version>
 
   <name>${project.groupId}:${project.artifactId}</name>
-  <description>Interface for consuming cards</description>
-  <url>https://github.com/brotherlogic/cardserver</url>
+  <description>Interface for showing pictures</description>
+  <url>https://github.com/brotherlogic/pictureframe</url>
 
   <properties>
     <checkstyle.version>6.8.1</checkstyle.version>
