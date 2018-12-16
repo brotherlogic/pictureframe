@@ -1,8 +1,9 @@
 language: java
+install: true
 
 branches:
   only:
   - master
 
-after_success:
-  - mvn clean test jacoco:report coveralls:report
+script:
+  - ./gradlew build --scan -s
