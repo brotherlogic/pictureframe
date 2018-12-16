@@ -16,4 +16,15 @@ public class PhotoTest {
 		Assert.assertNotNull(i);
 	}
 
+    	@Test
+	public void testPhotoSizing() throws IOException {
+		Photo f = new Photo(new File("images/christmas.jpg"));
+		Image i = f.getImage();
+		Assert.assertNotNull(i);
+
+		Assert.assertEquals(480, i.getHeight(null));
+		Assert.assertEquals(360, i.getWidth(null));
+	}
+
+
 }

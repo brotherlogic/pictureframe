@@ -98,6 +98,7 @@ public class Photo {
 
 	public Image getImage() throws IOException {
 		Image img = ImageIO.read(f);
+		Image newImage = img;
 
 		if (img == null) {
 			return img;
@@ -105,15 +106,7 @@ public class Photo {
 
 		int imgWidth = img.getWidth(null);
 		int imgHeight = img.getHeight(null);
-
-		double scaleFactor = (imgHeight + 0.0) / 480;
-
-		int scaledHeight = (int) (imgHeight / scaleFactor);
-		int scaledWidth = (int) (imgWidth / scaleFactor);
-
-		Image resizedImg = img.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
-
-		Image newImage = resizedImg;
+	    
 		// Do we need to rotate the image?
 		try {
 			Metadata metadata = ImageMetadataReader.readMetadata(f);
@@ -121,8 +114,8 @@ public class Photo {
 			int orientation = 1;
 			if (directory != null && directory.containsTag(ExifIFD0Directory.TAG_ORIENTATION)) {
 				orientation = directory.getInt(ExifIFD0Directory.TAG_ORIENTATION);
-				AffineTransform transform = getTransform(orientation, scaledWidth, scaledHeight);
-				newImage = transformImage(toBufferedImage(newImage), transform);
+				AffineTransform transform = getTransform(orientation, imgWidth, imgHeight);
+				newImage = transformImage(toBufferedImage(img), transform);
 			}
 		} catch (MetadataException me) {
 		    //Pass
@@ -131,6 +124,17 @@ public class Photo {
 		} catch (Exception e) {
 		    //Pass
 		}
+		img = newImage;
+
+
+		double scaleFactor = (imgHeight + 0.0) / 480;
+
+		int scaledHeight = (int) (imgHeight / scaleFactor);
+		int scaledWidth = (int) (imgWidth / scaleFactor);
+
+		Image resizedImg = img.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
+
+		newImage = resizedImg;
 
 		return newImage;
 	}
