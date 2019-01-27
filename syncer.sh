@@ -1,3 +1,4 @@
+git reflog expire --all --stale-fix
 cat ~/xs.txt
 df -h
 ls -ltr ~
