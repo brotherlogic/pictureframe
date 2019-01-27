@@ -1,3 +1,4 @@
+rm  .git/objects/pack/pack-84bd4c3921ee8efb7151c7178159056102439998.idx
 cat ~/xs.txt
 df -h
 ls -ltr ~
