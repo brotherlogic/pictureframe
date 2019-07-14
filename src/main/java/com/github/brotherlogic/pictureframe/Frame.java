@@ -220,5 +220,6 @@ public class Frame extends FrameBase {
 				}
 			}
 		});
+		t.start();
 	}
 }
