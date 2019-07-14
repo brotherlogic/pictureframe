@@ -52,6 +52,7 @@ public class Frame extends FrameBase {
 	}
 
 	public void sendStatus() throws Exception {
+		System.out.println("Sending status");
 		ManagedChannel channel = ManagedChannelBuilder.forAddress(getHost("proxy"), getPort("proxy")).usePlaintext(true).build();
 
 		FrameTrackerServiceGrpc.FrameTrackerServiceBlockingStub client = FrameTrackerServiceGrpc.newBlockingStub(channel);
