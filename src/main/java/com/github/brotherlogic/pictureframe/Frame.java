@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
-
+import java.util.concurrent.TimeUnit;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
@@ -18,6 +18,12 @@ import org.apache.commons.cli.GnuParser;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
+
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
+import frametracker.FrameTrackerServiceGrpc;
+import frametracker.Frametracker.StatusRequest;
+import frametracker.Frametracker.Status;
 
 import io.grpc.BindableService;
 
@@ -43,6 +49,14 @@ public class Frame extends FrameBase {
 		} catch (IOException e) {
 			config = new Config();
 		}
+	}
+
+	public void sendStatus() throws Exception {
+		ManagedChannel channel = ManagedChannelBuilder.forAddress(getHost("proxy"), getPort("proxy")).usePlaintext(true).build();
+
+		FrameTrackerServiceGrpc.FrameTrackerServiceBlockingStub client = FrameTrackerServiceGrpc.newBlockingStub(channel);
+		client.withDeadlineAfter(30, TimeUnit.SECONDS).recordStatus(StatusRequest.newBuilder().setStatus(Status.newBuilder().build()).build());
+		channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
 	}
 
 	public void runWebServer() throws IOException {
@@ -192,5 +206,19 @@ public class Frame extends FrameBase {
 		d.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		backgroundSync();
+
+		Thread t = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				while(true) {
+					try {
+						sendStatus();
+						Thread.sleep(1000*60*5);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
 	}
 }
