@@ -209,8 +209,8 @@ public class Frame extends FrameBase {
 			public void run() {
 				while(true) {
 					try {
-						sendStatus();
-						Thread.sleep(1000*60*5);
+					    Thread.sleep(1000*60*5);
+					    sendStatus();
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
