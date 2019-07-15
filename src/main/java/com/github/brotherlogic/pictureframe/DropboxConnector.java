@@ -30,6 +30,7 @@ public class DropboxConnector {
 
 	public void syncFolder(String inputDirectory, File outputDirectory) throws Exception {
 		ListFolderResult result = client.files().listFolder(inputDirectory);
+
 		for (Metadata child : result.getEntries()) {
 			File f = new File(outputDirectory.getAbsolutePath() + "/" + child.getPathDisplay());
 			boolean needsRefresh = false;
