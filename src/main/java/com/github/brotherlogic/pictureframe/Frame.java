@@ -33,9 +33,11 @@ public class Frame extends FrameBase {
 	private Config config;
 	private File configFile;
 	private boolean random = false;
+    private int tokenHash;
 
 	public Frame(String token, File configFile, boolean r) {
 		random = r;
+		tokenHash = token.hashCode();
 		connector = new DropboxConnector(token);
 
 		try {
@@ -54,7 +56,7 @@ public class Frame extends FrameBase {
 	public void sendStatus() throws Exception {
 		ManagedChannel channel = ManagedChannelBuilder.forAddress(getHost("proxy"), getPort("proxy")).usePlaintext(true).build();
 		FrameTrackerServiceGrpc.FrameTrackerServiceBlockingStub client = FrameTrackerServiceGrpc.newBlockingStub(channel);
-		client.withDeadlineAfter(30, TimeUnit.SECONDS).recordStatus(StatusRequest.newBuilder().setStatus(Status.newBuilder().build()).build());
+		client.withDeadlineAfter(30, TimeUnit.SECONDS).recordStatus(StatusRequest.newBuilder().setStatus(Status.newBuilder().setTokenHash(""+tokenHash).build()).build());
 		channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
 	}
 
