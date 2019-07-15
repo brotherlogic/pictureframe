@@ -44,7 +44,7 @@ public class DropboxConnector {
 				try {
 					client.files().download(child.getPathDisplay()).download(outputStream);
 				} catch (Exception e) {
-				    //Pass
+				    Frame.status.setDropboxError("" + e);
 				}finally {
 					outputStream.close();
 				}
