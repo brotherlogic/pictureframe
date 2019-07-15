@@ -52,10 +52,7 @@ public class Frame extends FrameBase {
 	}
 
 	public void sendStatus() throws Exception {
-		System.out.println("Sending status");
-		System.err.println("Also send");
 		ManagedChannel channel = ManagedChannelBuilder.forAddress(getHost("proxy"), getPort("proxy")).usePlaintext(true).build();
-
 		FrameTrackerServiceGrpc.FrameTrackerServiceBlockingStub client = FrameTrackerServiceGrpc.newBlockingStub(channel);
 		client.withDeadlineAfter(30, TimeUnit.SECONDS).recordStatus(StatusRequest.newBuilder().setStatus(Status.newBuilder().build()).build());
 		channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
@@ -207,9 +204,6 @@ public class Frame extends FrameBase {
 		d.setVisible(true);
 		d.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		backgroundSync();
-
-		System.err.println("Running status");
 		Thread t = new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -224,5 +218,7 @@ public class Frame extends FrameBase {
 			}
 		});
 		t.start();
+
+		backgroundSync();
 	}
 }
