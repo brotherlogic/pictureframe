@@ -158,7 +158,7 @@ public class Frame extends FrameBase {
 					    connector.syncFolder("", out);
 					    status.setTimeLastSync(System.currentTimeMillis());
 					} catch (Exception e) {
-					    System.err.println("Sync Failure!");					    
+					    status.setDropboxFailure("" + e);
 					}
 					try{
 						Photo p = null;

@@ -11,6 +11,7 @@ message Status {
   string token_hash = 2;
   string newest_file = 3;
   string dropbox_error = 4;
+  string dropbox_failure = 5;
 }
 
 message StatusRequest {
