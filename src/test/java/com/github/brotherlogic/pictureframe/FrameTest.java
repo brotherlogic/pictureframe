@@ -45,9 +45,6 @@ public class FrameTest {
 		Frame f = new Frame("madeup", null, false);
 		Photo p = f.getRandomPhoto("images");
 		Assert.assertTrue(p.getName().length() > 0);
-
-		Photo p2 = f.getRandomPhoto("images");
-		Assert.assertNull(p2);
 	}
 
 	@Test

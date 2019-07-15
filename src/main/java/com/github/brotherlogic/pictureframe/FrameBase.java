@@ -86,7 +86,7 @@ public abstract class FrameBase extends JavaServer {
 			return new Photo(rFiles.get(rPointer));
 		}
 
-		return null;
+		return new Photo(rFiles.get(0));
 	}
 
 	protected String getGreeting() {
