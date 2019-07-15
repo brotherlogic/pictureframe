@@ -35,6 +35,8 @@ public class Frame extends FrameBase {
 	private boolean random = false;
     private int tokenHash;
 
+    public static Status.Builder status = Status.newBuilder();
+    
 	public Frame(String token, File configFile, boolean r) {
 		random = r;
 		tokenHash = token.hashCode();
@@ -56,7 +58,7 @@ public class Frame extends FrameBase {
 	public void sendStatus() throws Exception {
 		ManagedChannel channel = ManagedChannelBuilder.forAddress(getHost("proxy"), getPort("proxy")).usePlaintext(true).build();
 		FrameTrackerServiceGrpc.FrameTrackerServiceBlockingStub client = FrameTrackerServiceGrpc.newBlockingStub(channel);
-		client.withDeadlineAfter(30, TimeUnit.SECONDS).recordStatus(StatusRequest.newBuilder().setStatus(Status.newBuilder().setTokenHash(""+tokenHash).build()).build());
+		client.withDeadlineAfter(30, TimeUnit.SECONDS).recordStatus(StatusRequest.newBuilder().setStatus(status.build()).build());
 		channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
 	}
 
@@ -147,13 +149,14 @@ public class Frame extends FrameBase {
 		if (connector != null) {
 			SwingUtilities.invokeLater(new Runnable() {
 				@Override
-				public void run() {
+				public void run() {				    
 					d.getContentPane().removeAll();
 
 					File out = new File("pics/");
 					out.mkdirs();
 					try {
-						connector.syncFolder("", out);
+					    connector.syncFolder("", out);
+					    status.setTimeLastSync(System.currentTimeMillis());
 					} catch (Exception e) {
 					    System.err.println("Sync Failure!");					    
 					}
