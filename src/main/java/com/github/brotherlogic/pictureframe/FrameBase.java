@@ -60,6 +60,8 @@ public abstract class FrameBase extends JavaServer {
 				}
 			});
 
+			Frame.status.setNewestFile(files[0].getName());
+
 			Calendar cal = Calendar.getInstance();
 			int index = Math.abs(cal.get(Calendar.HOUR_OF_DAY) - 7)
 					% Math.min(files.length, getConfig().getConfig().getRecentImages());
