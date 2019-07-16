@@ -54,7 +54,7 @@ public class DropboxConnector {
     }
     
 	public void syncFolder(String inputDirectory, File outputDirectory) throws Exception {
-		ListFolderResult result = client.files().listFolder(inputDirectory);
+	    ListFolderResult result = client.files().listFolderBuilder(inputDirectory).withIncludeDeleted(false).withRecursive(true).withLimit(2000L).start();
 		System.out.println("MORE " + result.getHasMore() + " and " + result.getEntries().size());
 		processResult(result, outputDirectory);
 
