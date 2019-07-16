@@ -29,29 +29,31 @@ public class DropboxConnector {
 
 
     public void processResult(ListFolderResult result, File outputDirectory) throws Exception {
-			for (Metadata child : result.getEntries()) {
-			    System.out.println("FOUND " + child.getPathDisplay());
-			File f = new File(outputDirectory.getAbsolutePath() + "/" + child.getPathDisplay());
-			boolean needsRefresh = false;
-					if (child instanceof FileMetadata) {
-						if (f.exists() && f.length() != ((FileMetadata)child).getSize()) {
-						    needsRefresh = true;
-						}
-					}
-			if (!f.exists() || needsRefresh) {
-				FileOutputStream outputStream = new FileOutputStream(
-						outputDirectory.getAbsolutePath() + "/" + child.getPathDisplay());
-				try {
-				    System.out.println("DOWNLOAD " + child.getPathDisplay());
-					client.files().download(child.getPathDisplay()).download(outputStream);
-				} catch (Exception e) {
-				    Frame.status.setDropboxError("" + e);
-				}finally {
-					outputStream.close();
-				}
-			}
+	int count  = 0;
+	for (Metadata child : result.getEntries()) {
+	    System.out.println("FOUND (" + count++ + ") " + child.getPathDisplay());
+	    File f = new File(outputDirectory.getAbsolutePath() + "/" + child.getPathDisplay());
+	    boolean needsRefresh = false;
+	    if (child instanceof FileMetadata) {
+		System.out.println("Checking for refresh");
+		if (f.exists() && f.length() != ((FileMetadata)child).getSize()) {
+		    needsRefresh = true;
 		}
-
+	    }
+	    System.out.println(f.exists() + " and " + needsRefresh);
+	    if (!f.exists() || needsRefresh) {
+		FileOutputStream outputStream = new FileOutputStream(
+								     outputDirectory.getAbsolutePath() + "/" + child.getPathDisplay());
+		try {
+		    System.out.println("DOWNLOAD " + child.getPathDisplay());
+		    client.files().download(child.getPathDisplay()).download(outputStream);
+		} catch (Exception e) {
+		    Frame.status.setDropboxError("" + e);
+		}finally {
+		    outputStream.close();
+		}
+	    }
+	}
     }
     
 	public void syncFolder(String inputDirectory, File outputDirectory) throws Exception {
