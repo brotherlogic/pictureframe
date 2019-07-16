@@ -28,10 +28,8 @@ public class DropboxConnector {
 	}
 
 
-	public void syncFolder(String inputDirectory, File outputDirectory) throws Exception {
-		ListFolderResult result = client.files().listFolder(inputDirectory);
-
-		for (Metadata child : result.getEntries()) {
+    public void processResult(ListFolderResult result, File outputDirectory) throws Exception {
+			for (Metadata child : result.getEntries()) {
 			File f = new File(outputDirectory.getAbsolutePath() + "/" + child.getPathDisplay());
 			boolean needsRefresh = false;
 					if (child instanceof FileMetadata) {
@@ -51,6 +49,17 @@ public class DropboxConnector {
 				}
 			}
 		}
+
+    }
+    
+	public void syncFolder(String inputDirectory, File outputDirectory) throws Exception {
+		ListFolderResult result = client.files().listFolder(inputDirectory);
+		processResult(result, outputDirectory);
+
+		while(result.getHasMore()) {
+		    result = client.files().listFolderContinue(result.getCursor());
+		    processResult(result, outputDirectory);
+		    }
 	}
 
 	public static void main(String[] args) throws Exception {
