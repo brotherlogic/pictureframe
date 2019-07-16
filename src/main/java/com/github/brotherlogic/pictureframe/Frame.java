@@ -158,6 +158,7 @@ public class Frame extends FrameBase {
 					    connector.syncFolder("", out);
 					    status.setTimeLastSync(System.currentTimeMillis());
 					} catch (Exception e) {
+					    e.printStackTrace();
 					    status.setDropboxFailure("" + e);
 					}
 					try{
