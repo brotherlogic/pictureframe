@@ -56,6 +56,7 @@ public class DropboxConnector {
 		ListFolderResult result = client.files().listFolder(inputDirectory);
 		processResult(result, outputDirectory);
 
+		System.out.println("Processing more? " + result.getHasMore());
 		while(result.getHasMore()) {
 		    result = client.files().listFolderContinue(result.getCursor());
 		    processResult(result, outputDirectory);
