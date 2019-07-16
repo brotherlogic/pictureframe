@@ -203,6 +203,12 @@ public class Frame extends FrameBase {
 
 	@Override
 	public void localServe() {
+	    try{
+		status.setOrigin(getHostName());
+	    } catch (Exception e){
+		e.printStackTrace();
+	    }
+	    
 		d = new FrameDisplay();
 		d.setSize(800, 480);
 		d.setLocationRelativeTo(null);
