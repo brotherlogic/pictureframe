@@ -30,7 +30,7 @@ public class DropboxConnector {
 
     public void processResult(ListFolderResult result, File outputDirectory) throws Exception {
 			for (Metadata child : result.getEntries()) {
-			    System.out.println("HERE " + child.getPathDisplay());
+			    System.out.println("FOUND " + child.getPathDisplay());
 			File f = new File(outputDirectory.getAbsolutePath() + "/" + child.getPathDisplay());
 			boolean needsRefresh = false;
 					if (child instanceof FileMetadata) {
@@ -42,6 +42,7 @@ public class DropboxConnector {
 				FileOutputStream outputStream = new FileOutputStream(
 						outputDirectory.getAbsolutePath() + "/" + child.getPathDisplay());
 				try {
+				    System.out.println("DOWNLOAD " + child.getPathDisplay());
 					client.files().download(child.getPathDisplay()).download(outputStream);
 				} catch (Exception e) {
 				    Frame.status.setDropboxError("" + e);
