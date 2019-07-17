@@ -31,7 +31,7 @@ public class DropboxConnector {
     public void processResult(ListFolderResult result, File outputDirectory) throws Exception {
 	int count  = 0;
 	for (Metadata child : result.getEntries()) {
-	    if (child.getPathDisplay().indexOf("/") < 0) {
+	    if (child.getPathDisplay().indexOf("/") < 1) {
 		File f = new File(outputDirectory.getAbsolutePath() + "/" + child.getPathDisplay());
 		boolean needsRefresh = false;
 		if (child instanceof FileMetadata) {
