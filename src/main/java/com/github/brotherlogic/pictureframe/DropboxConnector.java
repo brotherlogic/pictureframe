@@ -31,22 +31,18 @@ public class DropboxConnector {
     public void processResult(ListFolderResult result, File outputDirectory) throws Exception {
 	int count  = 0;
 	for (Metadata child : result.getEntries()) {
-	    System.out.println("FOUND (" + count++ + ") " + child.getPathDisplay());
 	    if (child.getPathDisplay().indexOf("/") < 0) {
 		File f = new File(outputDirectory.getAbsolutePath() + "/" + child.getPathDisplay());
 		boolean needsRefresh = false;
 		if (child instanceof FileMetadata) {
-		    System.out.println("Checking for refresh");
 		    if (f.exists() && f.length() != ((FileMetadata)child).getSize()) {
 			needsRefresh = true;
 		    }
 		}
-		System.out.println(f.exists() + " and " + needsRefresh);
 		if (!f.exists() || needsRefresh) {
 		    FileOutputStream outputStream = new FileOutputStream(
 									 outputDirectory.getAbsolutePath() + "/" + child.getPathDisplay());
 		    try {
-			System.out.println("DOWNLOAD " + child.getPathDisplay());
 			client.files().download(child.getPathDisplay()).download(outputStream);
 		    } catch (Exception e) {
 			Frame.status.setDropboxError("" + e);
@@ -60,10 +56,8 @@ public class DropboxConnector {
     
 	public void syncFolder(String inputDirectory, File outputDirectory) throws Exception {
 	    ListFolderResult result = client.files().listFolderBuilder(inputDirectory).withIncludeDeleted(false).withRecursive(true).withLimit(2000L).start();
-		System.out.println("MORE " + result.getHasMore() + " and " + result.getEntries().size());
 		processResult(result, outputDirectory);
 
-		System.out.println("Processing more? " + result.getHasMore() + " -> " + result.getCursor());
 		while(result.getHasMore()) {
 		    result = client.files().listFolderContinue(result.getCursor());
 		    processResult(result, outputDirectory);

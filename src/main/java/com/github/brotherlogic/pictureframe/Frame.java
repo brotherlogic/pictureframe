@@ -174,7 +174,6 @@ public class Frame extends FrameBase {
 							d.revalidate();
 						}
 					} catch (Exception e) {
-					    System.err.println("Unable to show picture!");
 					    e.printStackTrace();
 					}
 				}
