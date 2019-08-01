@@ -83,6 +83,13 @@ public abstract class FrameBase extends JavaServer {
 			Collections.shuffle(rFiles);
 		}
 
+		for (File f : rFiles) {
+		    if (f.lastModified() > Frame.status.getNewestFileDate()) {
+			Frame.status.setNewestFile(f.getName());
+			Frame.status.setNewestFileDate(f.lastModified());
+		    }
+		}
+
 		if (Math.abs(Calendar.getInstance().get(Calendar.HOUR_OF_DAY) - 7) != oldTime) {
 			rPointer = (rPointer + 1) % rFiles.size();
 			oldTime = Math.abs(Calendar.getInstance().get(Calendar.HOUR_OF_DAY) - 7);
