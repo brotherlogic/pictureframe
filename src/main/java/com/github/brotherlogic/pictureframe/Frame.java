@@ -130,6 +130,7 @@ public class Frame extends FrameBase {
 		return "PictureFrame";
 	}
 
+    
 	public void saveConfig() {
 		try {
 			FileOutputStream fos = new FileOutputStream(configFile);
