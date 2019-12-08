@@ -28,11 +28,11 @@ import frametracker.Frametracker.Status;
 import io.grpc.BindableService;
 
 public class Frame extends FrameBase {
-
-	private DropboxConnector connector;
-	private Config config;
-	private File configFile;
-	private boolean random = false;
+    
+    private DropboxConnector connector;
+    private Config config;
+    private File configFile;
+    private boolean random = false;
     private int tokenHash;
 
     public static Status.Builder status = Status.newBuilder();
