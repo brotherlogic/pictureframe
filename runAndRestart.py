@@ -1,7 +1,7 @@
 import os
 import sys
 
-verbose = False
+verbose = True
 
 if verbose:
     print "Running in verbose mode"
