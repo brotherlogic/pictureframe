@@ -11,6 +11,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import com.idrsolutions.image.JDeli;
+
 import com.drew.imaging.ImageMetadataReader;
 import com.drew.imaging.ImageProcessingException;
 import com.drew.metadata.Directory;
@@ -98,6 +100,13 @@ public class Photo {
 
 	public Image getImage() throws IOException {
 		Image img = ImageIO.read(f);
+		if (f.getName().endsWith(".heic")) {
+			try {
+			img = JDeli.read(f);
+			} catch (Exception e) {
+				System.err.println("Cannot read file: " + e);
+			}
+		}
 
 		if (img == null) {
 			return img;
